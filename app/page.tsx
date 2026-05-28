@@ -1,6 +1,10 @@
 import ExploreBtn from "@/components/ExploreBtn";
 import EventCard from "@/components/EventCard";
 import { events } from "@/lib/constants";
+// Tags for github: PostHog, MongoDB
+// https://www.youtube.com/watch?v=I1V9YWqRIeI&t=4135s
+// 1:47:47
+// posthog: https://eu.posthog.com/project/187574/home
 
 const Page = () => {
   return (

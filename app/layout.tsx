@@ -4,6 +4,9 @@ import "./globals.css";
 import LightRays from "@/components/LightRays";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/Navbar";
+import { Suspense } from "react";
+import { PostHogProvider } from "./providers";
+import { PostHogPageView } from "./PostHogPageView";
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 const SchibstedGrotesk = Schibsted_Grotesk({
@@ -40,21 +43,26 @@ export default function RootLayout({
       )}
     >
       <body>
-        <Navbar />
-        <div className="absolute inset-0 top-0 z-[-1] min-h-screen">
-          <LightRays
-            raysOrigin="top-center-offset"
-            raysColor="#5dfeca"
-            raysSpeed={0.5}
-            lightSpread={0.9}
-            rayLength={1.4}
-            followMouse={true}
-            mouseInfluence={0.02}
-            noiseAmount={0}
-            distortion={0.01}
-          />
-        </div>
-        <main>{children}</main>
+        <PostHogProvider>
+          <Suspense fallback={null}>
+            <PostHogPageView />
+          </Suspense>
+          <Navbar />
+          <div className="absolute inset-0 top-0 z-[-1] min-h-screen">
+            <LightRays
+              raysOrigin="top-center-offset"
+              raysColor="#5dfeca"
+              raysSpeed={0.5}
+              lightSpread={0.9}
+              rayLength={1.4}
+              followMouse={true}
+              mouseInfluence={0.02}
+              noiseAmount={0}
+              distortion={0.01}
+            />
+          </div>
+          <main>{children}</main>
+        </PostHogProvider>
       </body>
     </html>
   );
