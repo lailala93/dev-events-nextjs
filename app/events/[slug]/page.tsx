@@ -4,12 +4,17 @@ import { Suspense } from "react";
 import Image from "next/image";
 import BookEvent from "@/components/BookEvent";
 import { IEvent } from "@/database";
-import { getSimiliarEventsBySlug } from "@/components/actions/event.actions";
+import { getSimiliarEventsBySlug } from "@/lib/actions/actions/event.actions";
 import EventCard from "@/components/EventCard";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-// I LEFT OFF AT: https://www.youtube.com/watch?v=I1V9YWqRIeI&t=9983s H
+if (!BASE_URL) {
+  throw new Error(
+    "NEXT_PUBLIC_BASE_URL is not defined. Please set it in .env.local",
+  );
+}
+
 const bookings = 10;
 
 const EventTags = ({ tags }: { tags: string[] }) => (

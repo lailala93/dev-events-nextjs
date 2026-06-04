@@ -4,7 +4,6 @@ import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import Event, { IEvent } from "@/database/event.model";
 
-// WORK HERE: 2:53:00
 // Define route params type for type safety
 type RouteParams = {
   params: Promise<{

@@ -1,4 +1,4 @@
-// /actions/event.actions.ts
+// lib/actions/event.actions.ts
 
 // Server actions - executed on the server - to securely handle mutations/side-effects/ any other server-side logic, without exposing sensitive code. SO it's a POST request without a lot of code.
 
