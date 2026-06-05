@@ -10,16 +10,17 @@ export async function POST(req: NextRequest) {
 
     const formData = await req.formData();
 
-    let event;
+    // let event;
+    // try {
+    //   event = Object.fromEntries(formData.entries());
+    // } catch (e) {
+    //   return NextResponse.json(
+    //     { message: "Invalid JSON data format" },
+    //     { status: 400 },
+    //   );
+    // }
 
-    try {
-      event = Object.fromEntries(formData.entries());
-    } catch (e) {
-      return NextResponse.json(
-        { message: "Invalid JSON data format" },
-        { status: 400 },
-      );
-    }
+    const event = Object.fromEntries(formData.entries());
 
     const file = formData.get("image") as File;
 
@@ -29,8 +30,25 @@ export async function POST(req: NextRequest) {
         { status: 400 },
       );
 
-    let tags = JSON.parse(formData.get("tags") as string);
-    let agenda = JSON.parse(formData.get("agenda") as string);
+    // let tags = JSON.parse(formData.get("tags") as string);
+    // let agenda = JSON.parse(formData.get("agenda") as string);
+
+    let tags: string[];
+    let agenda: string[];
+
+    try {
+      tags = JSON.parse(formData.get("tags") as string);
+      agenda = JSON.parse(formData.get("agenda") as string);
+
+      if (!Array.isArray(tags) || !Array.isArray(agenda)) {
+        throw new Error("Tags and agenda must be arrays");
+      }
+    } catch (e) {
+      return NextResponse.json(
+        { message: "Invalid JSON format for tags or agenda" },
+        { status: 400 },
+      );
+    }
 
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);

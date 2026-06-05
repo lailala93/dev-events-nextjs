@@ -1,4 +1,4 @@
-// /actions/event.actions.ts
+// lib/actions/event.actions.ts
 
 // Server actions - executed on the server - to securely handle mutations/side-effects/ any other server-side logic, without exposing sensitive code. SO it's a POST request without a lot of code.
 
@@ -7,7 +7,7 @@
 import connectDB from "@/lib/mongodb";
 import Event from "@/database/event.model";
 
-export const getSimiliarEventsBySlug = async (slug: string) => {
+export const getSimilarEventsBySlug = async (slug: string) => {
   try {
     await connectDB();
     const event = await Event.findOne({ slug });
