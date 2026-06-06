@@ -6,20 +6,25 @@
 
 import connectDB from "@/lib/mongodb";
 import Event from "@/database/event.model";
+import { IEvent } from "@/database/event.model";
 
-export const getSimilarEventsBySlug = async (slug: string) => {
+export const getSimilarEventsBySlug = async (
+  slug: string,
+): Promise<IEvent[]> => {
   try {
     await connectDB();
+
     const event = await Event.findOne({ slug });
+
+    if (!event) return [];
 
     return await Event.find({
       // $ne = mongoDB query operator = not equal
       _id: {
         $ne: event._id,
       },
-      // find docs whose id != to event._id
       tags: { $in: event.tags },
-    }).lean();
+    }).lean<IEvent[]>();
   } catch {
     return [];
   }
